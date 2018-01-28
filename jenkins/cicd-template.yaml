@@ -300,12 +300,12 @@ objects:
             GOGS_HOSTNAME="gogs-$CICD_NAMESPACE.$HOSTNAME"
 
             if [ "${EPHEMERAL}" == "true" ] ; then
-              oc new-app -f https://raw.githubusercontent.com/OpenShiftDemos/gogs-openshift-docker/master/openshift/gogs-template.yaml \
+              oc new-app -f http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/gogs-template.yaml \
                   --param=GOGS_VERSION=0.11.29 \
                   --param=HOSTNAME=$GOGS_HOSTNAME \
                   --param=SKIP_TLS_VERIFY=true
             else
-              oc new-app -f https://raw.githubusercontent.com/OpenShiftDemos/gogs-openshift-docker/master/openshift/gogs-persistent-template.yaml \
+              oc new-app -f https://http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/gogs-persistent-template.yaml \
                   --param=GOGS_VERSION=0.11.29 \
                   --param=HOSTNAME=$GOGS_HOSTNAME \
                   --param=SKIP_TLS_VERIFY=true
@@ -314,13 +314,13 @@ objects:
             sleep 5
 
             if [ "${WITH_SONAR}" == "true" ] ; then
-              oc new-app -f http://bit.ly/openshift-sonarqube-embedded-template --param=SONARQUBE_VERSION=6.7 --param=SONAR_MAX_MEMORY=4Gi
+              oc new-app -f http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/sonarqube-template.yaml --param=SONARQUBE_VERSION=6.7 --param=SONAR_MAX_MEMORY=4Gi
             fi
 
             if [ "${EPHEMERAL}" == "true" ] ; then
-              oc new-app -f https://raw.githubusercontent.com/OpenShiftDemos/nexus/master/nexus3-template.yaml --param=NEXUS_VERSION=3.6.1 --param=MAX_MEMORY=2Gi
+              oc new-app -f http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/nexus3-template.yaml --param=NEXUS_VERSION=3.6.1 --param=MAX_MEMORY=2Gi
             else
-              oc new-app -f https://raw.githubusercontent.com/OpenShiftDemos/nexus/master/nexus3-persistent-template.yaml --param=NEXUS_VERSION=3.6.1 --param=MAX_MEMORY=2Gi
+              oc new-app -f http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/nexus3-persistent-template.yaml --param=NEXUS_VERSION=3.6.1 --param=MAX_MEMORY=2Gi
             fi
 
             GOGS_SVC=$(oc get svc gogs -o template --template='{{.spec.clusterIP}}')
