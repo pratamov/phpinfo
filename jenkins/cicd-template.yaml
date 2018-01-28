@@ -305,7 +305,7 @@ objects:
                   --param=HOSTNAME=$GOGS_HOSTNAME \
                   --param=SKIP_TLS_VERIFY=true
             else
-              oc new-app -f https://http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/gogs-persistent-template.yaml \
+              oc new-app -f https://http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/gogs-template.yaml \
                   --param=GOGS_VERSION=0.11.29 \
                   --param=HOSTNAME=$GOGS_HOSTNAME \
                   --param=SKIP_TLS_VERIFY=true
@@ -320,7 +320,7 @@ objects:
             if [ "${EPHEMERAL}" == "true" ] ; then
               oc new-app -f http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/nexus3-template.yaml --param=NEXUS_VERSION=3.6.1 --param=MAX_MEMORY=2Gi
             else
-              oc new-app -f http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/nexus3-persistent-template.yaml --param=NEXUS_VERSION=3.6.1 --param=MAX_MEMORY=2Gi
+              oc new-app -f http://openshift-templates-repo.cloudapps.intra.excelcom.co.id/jenkins/nexus3-template.yaml --param=NEXUS_VERSION=3.6.1 --param=MAX_MEMORY=2Gi
             fi
 
             GOGS_SVC=$(oc get svc gogs -o template --template='{{.spec.clusterIP}}')
